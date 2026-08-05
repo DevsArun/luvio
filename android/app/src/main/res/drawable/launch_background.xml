@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Deep-night backdrop shown before the Flutter splash animation takes over. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/deepNight" />
+        </shape>
+    </item>
+</layer-list>

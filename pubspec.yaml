@@ -1,0 +1,86 @@
+name: luvio_player
+description: "Luvio Player — Premium offline media player, tablet-first and optimized for Amazon Fire tablets (Fire OS)."
+publish_to: "none"
+version: 2.6.0+5100
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management
+  provider: ^6.1.2
+
+  # Media engine (libmpv) — plays every major container/codec, HW & SW decoding,
+  # multiple audio tracks, embedded + external subtitles.
+  media_kit: ^1.1.11
+  media_kit_video: '>=1.2.5 <1.3.0'
+  media_kit_libs_video: ^1.0.5
+
+  # Persistence
+  shared_preferences: ^2.2.3
+  path_provider: ^2.1.3
+
+  # Platform capabilities
+  permission_handler: ^11.3.1
+  device_info_plus: ^10.1.0
+  local_auth: ^2.2.0
+  screen_brightness: ^0.2.2+1
+  # Pinned: wakelock_plus 1.3.x pulls package_info_plus 9.x, which needs a
+  # newer Flutter Gradle plugin than Flutter 3.24.x ships with.
+  wakelock_plus: 1.2.8
+
+  # Media utilities
+  video_thumbnail: ^0.5.3
+  file_picker: ^8.0.3
+  share_plus: ^9.0.0
+  # Provides XFile. It arrives transitively with share_plus, but we import it
+  # directly (mimeType / name on shared files) so it is declared explicitly.
+  cross_file: ^0.3.4+1
+
+  # Misc
+  crypto: ^3.0.3
+  intl: ^0.19.0
+  # Transitive dependency of share_plus / wakelock_plus. Pinned explicitly so
+  # pub can never resolve the 9.x line (see dependency_overrides below).
+  package_info_plus: 8.1.1
+
+# ---------------------------------------------------------------------------
+# Version guards for the CI toolchain (Flutter 3.24.5 / AGP 8.7.3).
+# package_info_plus 9.0.0+ reads `android.flutter.compileSdkVersion` from the
+# Flutter Gradle plugin, which only exists in Flutter 3.27+. Resolving it on
+# 3.24.5 fails with:
+#   Could not get unknown property 'flutter' for extension 'android'
+# Keeping the 8.x line makes the Android build configure correctly.
+# ---------------------------------------------------------------------------
+dependency_overrides:
+  package_info_plus: 8.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  # ---------------------------------------------------------------------------
+  # The Luvio Player design system is built on the "Inter" typeface.
+  # For a fully-offline, pixel-exact build, download the Inter static TTFs
+  # (https://rsms.me/inter — free, OFL licensed) into assets/fonts/ and
+  # uncomment the block below. Until then the theme gracefully falls back to
+  # the platform sans (Roboto) while keeping the exact sizes/weights/metrics.
+  # ---------------------------------------------------------------------------
+  # fonts:
+  #   - family: Inter
+  #     fonts:
+  #       - asset: assets/fonts/Inter-Regular.ttf
+  #         weight: 400
+  #       - asset: assets/fonts/Inter-Medium.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/Inter-SemiBold.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/Inter-Bold.ttf
+  #         weight: 700
